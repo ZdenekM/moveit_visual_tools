@@ -954,6 +954,12 @@ bool VisualTools::publishCoords(const geometry_msgs::Pose& pose, const rviz_scal
 
 bool VisualTools::publishBlock(const geometry_msgs::Pose &pose, const rviz_colors color, const double &block_size)
 {
+    return publishBlock(pose, color, block_size, block_size, block_size);
+}
+
+bool VisualTools::publishBlock(const geometry_msgs::Pose &pose, const rviz_colors color,
+        const double &block_size_x, const double & block_size_y, const double & block_size_z)
+{
   if(muted_)
     return true;
 
@@ -966,9 +972,9 @@ bool VisualTools::publishBlock(const geometry_msgs::Pose &pose, const rviz_color
   block_marker_.pose = pose;
 
   // Set marker size
-  block_marker_.scale.x = block_size;
-  block_marker_.scale.y = block_size;
-  block_marker_.scale.z = block_size;
+  block_marker_.scale.x = block_size_x;
+  block_marker_.scale.y = block_size_y;
+  block_marker_.scale.z = block_size_z;
 
   // Set marker color
   block_marker_.color = getColor( color );

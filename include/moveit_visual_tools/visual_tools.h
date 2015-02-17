@@ -466,6 +466,8 @@ public:
    * \return true on success
    */
   bool publishBlock(const geometry_msgs::Pose &pose, const rviz_colors color = BLUE, const double &block_size = 0.1);
+  bool publishBlock(const geometry_msgs::Pose &pose, const rviz_colors color,
+          const double &block_size_x, const double & block_size_y, const double & block_size_z);
 
   /**
    * \brief Publish a marker of a cylinder to Rviz
