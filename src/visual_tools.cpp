@@ -436,7 +436,7 @@ void VisualTools::loadMarkerPub()
     return;
 
   // Rviz marker publisher
-  pub_rviz_marker_ = nh_.advertise<visualization_msgs::Marker>(marker_topic_, 10);
+  pub_rviz_marker_ = nh_.advertise<visualization_msgs::Marker>(marker_topic_, 100);
   ROS_DEBUG_STREAM_NAMED("visual_tools","Publishing Rviz markers on topic " << pub_rviz_marker_.getTopic());
 
   ros::spinOnce();
@@ -938,6 +938,20 @@ bool VisualTools::publishArrow(const geometry_msgs::Pose &pose, const rviz_color
   return true;
 }
 
+bool VisualTools::publishCoords(const Eigen::Affine3d& pose, const rviz_scales scale)
+{
+    bool ok = true;
+    ok &= publishArrow(pose, RED, scale);
+    ok &= publishArrow(pose * Eigen::AngleAxisd(M_PI_2, Eigen::Vector3d::UnitZ()), GREEN, scale);
+    ok &= publishArrow(pose * Eigen::AngleAxisd(-M_PI_2, Eigen::Vector3d::UnitY()), BLUE, scale);
+    return ok;
+}
+
+bool VisualTools::publishCoords(const geometry_msgs::Pose& pose, const rviz_scales scale)
+{
+  return publishCoords(convertPose(pose), scale);
+}
+
 bool VisualTools::publishBlock(const geometry_msgs::Pose &pose, const rviz_colors color, const double &block_size)
 {
   if(muted_)
@@ -1266,7 +1280,9 @@ bool VisualTools::publishGrasps(const std::vector<moveit_msgs::Grasp>& possible_
     ROS_DEBUG_STREAM_NAMED("grasp","Visualizing grasp pose " << i);
 
     publishEEMarkers(possible_grasps[i].grasp_pose.pose);
+    ros::Duration(0.1).sleep();
 
+    publishCoords(possible_grasps[i].grasp_pose.pose);
     ros::Duration(0.1).sleep();
   }
 
@@ -1401,7 +1417,7 @@ bool VisualTools::publishIKSolutions(const std::vector<trajectory_msgs::JointTra
   // Create a trajectory with one point
   moveit_msgs::RobotTrajectory trajectory_msg;
   trajectory_msg.joint_trajectory.header.frame_id = base_frame_;
-  trajectory_msg.joint_trajectory.joint_names = joint_model_group->getJointModelNames();
+  trajectory_msg.joint_trajectory.joint_names = joint_model_group->getActiveJointModelNames();
 
   // Overall length of trajectory
   double running_time = 0;

@@ -412,6 +412,10 @@ public:
   bool publishArrow(const Eigen::Affine3d &pose, const rviz_colors color = BLUE, const rviz_scales scale = REGULAR);
   bool publishArrow(const geometry_msgs::Pose &pose, const rviz_colors color = BLUE, const rviz_scales scale = REGULAR);
 
+  /// Publish a coordinate system at pose
+  bool publishCoords(const Eigen::Affine3d& pose, const rviz_scales scale = REGULAR);
+  bool publishCoords(const geometry_msgs::Pose& pose, const rviz_scales scale = REGULAR);
+
   /**
    * \brief Publish a marker of rectangle to rviz
    * \param point1 - x,y,z top corner location of box
