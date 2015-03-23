@@ -1000,8 +1000,8 @@ bool VisualTools::publishCylinder(const geometry_msgs::Pose &pose, const rviz_co
   cylinder_marker_.pose = pose;
 
   // Set marker size
-  cylinder_marker_.scale.x = radius;
-  cylinder_marker_.scale.y = radius;
+  cylinder_marker_.scale.x = 2.0 * radius;
+  cylinder_marker_.scale.y = 2.0 * radius;
   cylinder_marker_.scale.z = height;
 
   // Set marker color
