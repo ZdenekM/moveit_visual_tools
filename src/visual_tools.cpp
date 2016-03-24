@@ -305,6 +305,15 @@ bool VisualTools::loadPlanningSceneMonitor()
   return true;
 }
 
+bool VisualTools::publishCollisionObjectMsg(moveit_msgs::CollisionObject collision_obj) {
+
+  loadCollisionPub(); // always call this before publishing
+  pub_collision_obj_.publish(collision_obj);
+  ros::spinOnce();
+  
+  return true;
+}
+
 bool VisualTools::processCollisionObjectMsg(moveit_msgs::CollisionObject msg)
 {
   // Apply removal command directly to avoid a ROS msg call

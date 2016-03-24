@@ -213,6 +213,8 @@ public:
    */
   bool loadPlanningSceneMonitor();
 
+  bool publishCollisionObjectMsg(moveit_msgs::CollisionObject collision_obj);
+
   /**
    * \brief Skip a ROS message call by sending directly to planning scene monitor
    * \param collision object message
